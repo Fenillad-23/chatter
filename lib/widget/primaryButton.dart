@@ -15,17 +15,17 @@ Container primaryButton(double width, double height, Color? backgroundColor,
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
           )),
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              animationDuration: Duration(milliseconds: 5000),
-              backgroundColor: backgroundColor,
-              onSurface: Colors.transparent,
-              shadowColor: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(radius ?? 0))),
-          onPressed: onPressed,
-          child: TextView('$title',
-              fontWeight: FontWeight.w400,
-              fontSize: 18,
-              textColor: TextColor)));
+      child: ClipRRect(
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: backgroundColor,
+                shadowColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(radius ?? 0))),
+            onPressed: onPressed,
+            child: TextView('$title',
+                fontWeight: FontWeight.w400,
+                fontSize: 18,
+                textColor: TextColor)),
+      ));
 }

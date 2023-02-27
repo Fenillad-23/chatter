@@ -4,7 +4,7 @@ import 'package:chatter/widget/primaryButton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../auth/signin.dart';
+import '../home.dart';
 
 class SplashScreen2 extends StatefulWidget {
   const SplashScreen2({super.key});
@@ -89,11 +89,10 @@ class _SplashScreen2State extends State<SplashScreen2> {
           Padding(
             padding: const EdgeInsets.only(top: 48.0, right: 24, left: 24),
             child: primaryButton(380, 60, Colors.transparent, () {
-              Get.to(
-                SignIn(),
-                curve: Curves.easeIn,
-                transition: Transition.fadeIn,
-              );
+              Get.to(Home(),
+                  curve: Curves.easeIn,
+                  transition: Transition.fadeIn,
+                  duration: Duration(seconds: 3));
             }, 'Get Started', AppColors.secondaryText, 28),
           )
         ]),

@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 
-class signin extends GetxController {
+class signup extends GetxController {
   bool obscure = true;
-  bool remember = false;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController name = TextEditingController();
+  dynamic gender = TextEditingController();
   Obscure(bool obcure) {
     obscure = !obcure;
-  }
-
-  Remember(bool value) {
-    remember = value;
   }
 }

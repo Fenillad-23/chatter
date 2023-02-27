@@ -7,8 +7,8 @@ class AppColors {
   static Color lightText = Color(0xFF6C6C6C);
   static Color primaryTextField = Color.fromRGBO(240, 240, 241, 1);
   static Color primaryIcon = Colors.black;
-  static Color secondaryIcon = Color.fromARGB(1, 19, 15, 38);
-
+  static Color secondaryIcon = Colors.white;
+  static Color grey = Colors.grey.shade200;
   static List<Color> gradient = [Color(0xFFB536F7), Color(0xFF7043E8)];
 
   static Color lightButtonBorder = Colors.blue;
