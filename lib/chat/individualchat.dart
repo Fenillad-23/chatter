@@ -4,11 +4,10 @@ import 'package:chatter/widget/TextView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../chatcontroller/chatcontroller.dart';
+import '../controller/chatcontroller.dart';
 import '../color/AppColor.dart';
 import '../widget/appBar.dart';
 import 'call.dart';
-
 
 class IndividualChat extends StatefulWidget {
   const IndividualChat({super.key});
@@ -43,8 +42,10 @@ class _IndividualChatState extends State<IndividualChat> {
             child: IconButton(
               icon: Image.asset('assets/icons/call.png', height: 24, width: 24),
               onPressed: () {
-                Get.to(Call(),arguments: name,
-                    curve: Curves.ease, transition: Transition.fadeIn);
+                Get.to(Call(),
+                    arguments: name,
+                    curve: Curves.ease,
+                    transition: Transition.fadeIn);
               },
             )),
       ]),

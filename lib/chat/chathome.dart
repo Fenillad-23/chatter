@@ -1,4 +1,4 @@
-import 'package:chatter/chatcontroller/chatcontroller.dart';
+import 'package:chatter/controller/chatcontroller.dart';
 import 'package:chatter/color/AppColor.dart';
 import 'package:chatter/widget/AssetIcon.dart';
 import 'package:chatter/widget/TextView.dart';

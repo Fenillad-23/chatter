@@ -45,22 +45,6 @@ class chat extends GetxController {
       'msgcount': '1',
       'time': '9:41 am'
     },
-    {
-      'img': 'assets/person2.png',
-      'name': 'Rigo Bing',
-      'msg': 'Hope you are doing well...',
-      'status': 'online',
-      'msgcount': '1',
-      'time': '9:41 am'
-    },
-    {
-      'img': 'assets/person4.png',
-      'name': 'Jenny Wilson',
-      'msg': 'Hope you are doing well...',
-      'status': 'offline',
-      'msgcount': '1',
-      'time': '9:41 am'
-    }
   ];
   List messages = [
     {'msgcontent': 'hello', 'type': 'sender'},

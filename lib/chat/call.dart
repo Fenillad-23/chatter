@@ -5,7 +5,7 @@ import 'package:chatter/widget/primaryButton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../widget/roundContainer.dart';
+import '../controller/chatcontroller.dart';
 
 class Call extends StatefulWidget {
   const Call({super.key});
@@ -16,13 +16,38 @@ class Call extends StatefulWidget {
 
 class _CallState extends State<Call> {
   String? name;
+  String? img;
+  chat controller = Get.put(chat());
   bool isGradient = false;
   @override
   void initState() {
     super.initState();
     setState(() {
       name = Get.arguments;
+      get();
     });
+  }
+
+  void get() {
+    print("chat contact : -${controller.chatContact}");
+    for (var index = 0; index < controller.chatContact.length; index++) {
+      print(controller.chatContact[index]['img']);
+      if (controller.chatContact[index]['name'] == name) {
+        setState(() {
+          // print(controller.chatContact[index]['name']);
+          // print(controller.chatContact[index]['img']);
+
+          img = controller.chatContact[index]['img'];
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    img = '';
+    name = '';
   }
 
   @override
@@ -31,8 +56,12 @@ class _CallState extends State<Call> {
         appBar: Appbar('$name', AppColors.secondaryText, false,
             AppColors.secondaryIcon, true, [
           Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Icon(Icons.message_rounded),
+            padding: const EdgeInsets.only(right: 26.0),
+            child: Image.asset(
+              'assets/icons/Chat.png',
+              height: 20,
+              width: 20,
+            ),
           )
         ]),
         body: Center(
@@ -40,10 +69,10 @@ class _CallState extends State<Call> {
                 // gnment: MainAxisAlignment.center,
                 children: [
               Padding(
-                padding: const EdgeInsets.only(top: 90.0),
+                padding: const EdgeInsets.only(top: 80.0),
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(100),
-                    child: Image.asset('assets/person1.png')),
+                    child: Image.asset('$img')),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 332.0),
@@ -100,10 +129,19 @@ class _CallState extends State<Call> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 60.0),
-                child: primaryButton(380, 60, Colors.transparent, () {},
-                    'End Call', AppColors.primaryText, 28),
+              Expanded(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(top: 200.0, left: 24, right: 24),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: primaryButton(380, 60, Colors.transparent, () {},
+                            'End Call', AppColors.secondaryText, 28),
+                      ),
+                    ],
+                  ),
+                ),
               )
             ])));
   }

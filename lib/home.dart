@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'chat/callhistory.dart';
 import 'chat/chathome.dart';
+import 'chat/profile.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,7 +14,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var index = 0;
-  List screens = [ChatHome(), CallHistory(), ChatHome(), CallHistory()];
+  List screens = [ChatHome(), CallHistory(), ChatHome(), Profile()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +29,7 @@ class _HomeState extends State<Home> {
                   topLeft: Radius.circular(12), topRight: Radius.circular(12))),
           child: BottomNavigationBar(
             selectedItemColor: Colors.purple,
-            unselectedItemColor: AppColors.grey,
+            unselectedItemColor: Colors.grey,
             currentIndex: index,
             elevation: 1,
             type: BottomNavigationBarType.fixed,
