@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 
 class chat extends GetxController {
   TextEditingController chatController = TextEditingController();
@@ -57,17 +56,18 @@ class chat extends GetxController {
     });
     FirebaseConfig.storage
         .collection('chat')
-        .where('users', arrayContainsAny: [chatEmail,currentUserEmail.value])
-        .get().then((value) {
-          if(value.docs.length>0){
+        .where('users', arrayContainsAny: [chatEmail, currentUserEmail.value])
+        .get()
+        .then((value) {
+          if (value.docs.length > 0) {
             print('user chat exists');
-          }else{
+          } else {
             FirebaseFirestore.instance.collection("chat").add({
-              'users': FieldValue.arrayUnion([currentUserEmail.value, chatEmail]),
+              'users':
+                  FieldValue.arrayUnion([currentUserEmail.value, chatEmail]),
             }).then((value) => print(value.id));
             print('new user chat has been created');
           }
-    });
-
+        });
   }
 }

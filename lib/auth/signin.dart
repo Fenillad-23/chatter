@@ -3,7 +3,6 @@ import 'package:chatter/auth/signup.dart';
 import 'package:chatter/widget/EditText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../chat/chathome.dart';
 import '../color/AppColor.dart';
 import '../controller/signincontroller.dart';
 import '../widget/TextView.dart';
