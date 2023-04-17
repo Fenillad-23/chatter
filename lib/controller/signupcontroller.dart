@@ -23,31 +23,36 @@ class signup extends GetxController {
     if (email.text.isEmail ||
         password.text.length > 4 ||
         name.text.isNotEmpty) {
-      FirebaseConfig.auth
-          .createUserWithEmailAndPassword(
-              email: email.text, password: password.text)
-          .then((value) {
-        User? user = FirebaseConfig.auth.currentUser;
-        Map<String, dynamic> userdata = {
-          'email': email.text,
-          'img': img,
-          'uid': user!.uid,
-          'username': name.text
-        };
-        FirebaseConfig.storage
-            .collection('user')
-            .doc(user.uid)
-            .set(userdata)
+      try {
+        FirebaseConfig.auth
+            .createUserWithEmailAndPassword(
+                email: email.text, password: password.text)
             .then((value) {
-          Get.offNamed(RouteGenerator.home);
+          User? user = FirebaseConfig.auth.currentUser;
+          Map<String, dynamic> userdata = {
+            'email': email.text,
+            'img': img,
+            'uid': user!.uid,
+            'username': name.text
+          };
+          FirebaseConfig.storage
+              .collection('user')
+              .doc(user.uid)
+              .set(userdata)
+              .then((value) {
+            Get.offNamed(RouteGenerator.home);
+          }).catchError((e) {
+            msg = e.message;
+            toast(msg);
+          });
         }).catchError((e) {
           msg = e.message;
           toast(msg);
         });
-      }).catchError((e) {
-        msg = e.message;
+      } catch (exception) {
+        msg = exception.toString();
         toast(msg);
-      });
+      }
     }
   }
 }

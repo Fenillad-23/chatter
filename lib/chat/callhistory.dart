@@ -1,4 +1,3 @@
-import 'package:chatter/chat/individualchat.dart';
 import 'package:chatter/color/AppColor.dart';
 import 'package:chatter/widget/TextView.dart';
 import 'package:chatter/widget/appBar.dart';

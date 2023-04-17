@@ -1,4 +1,3 @@
-import 'package:chatter/intro/splash1.dart';
 import 'package:chatter/route/route_generator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

@@ -211,8 +211,7 @@ class _ProfileState extends State<Profile> {
                     Expanded(
                       child: primaryButton(380, 60, Colors.transparent, () async{
                          await FirebaseConfig.auth.signOut();
-
-                        Get.toNamed(RouteGenerator.login);
+                        Get.offNamed(RouteGenerator.login);
                       },
                           'Log Out', AppColors.secondaryText, 28),
                     ),

@@ -3,16 +3,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:uuid/uuid.dart';
+import '../toast_msg.dart';
 
 class chat extends GetxController {
   TextEditingController chatController = TextEditingController();
   ScrollController scroll = ScrollController();
+  String msg = '';
+  String chatID = '';
+  String? peerUser = '';
   RxList chatContact = [].obs;
+  RxBool chatExists = false.obs;
+
   List messages = [
     {'msgcontent': 'hello', 'type': 'sender'},
     {'msgcontent': 'hy', 'type': 'receiver'},
-    {'msgcontent': 'what you doin', 'type': 'sender'},
+    {'msgcontent': 'what you doing', 'type': 'sender'},
     {'msgcontent': 'nothing', 'type': 'receiver'},
     {'msgcontent': 'why?', 'type': 'sender'},
   ];
@@ -23,18 +29,31 @@ class chat extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    chatID = '';
+    peerUser = '';
+    Get.delete<chat>();
+    super.onClose();
+  }
+
   void fetchAllUser() async {
-    User? user = FirebaseConfig.auth.currentUser;
-    FirebaseConfig.storage
-        .collection('user')
-        .where('uid', isNotEqualTo: user!.uid)
-        .get()
-        .then((list) {
-      for (var result in list.docs) {
-        print(result.data());
-        chatContact.add(result.data());
-      }
-    });
+    try {
+      User? user = FirebaseConfig.auth.currentUser;
+      FirebaseConfig.storage
+          .collection('user')
+          .where('uid', isNotEqualTo: user!.uid)
+          .get()
+          .then((list) {
+        for (var result in list.docs) {
+          print(result.data());
+          chatContact.add(result.data());
+        }
+      });
+    } catch (FirebaseAuthException) {
+      msg = FirebaseAuthException.toString();
+      toast(msg);
+    }
   }
 
   void send(String msg) {
@@ -42,32 +61,41 @@ class chat extends GetxController {
     update();
   }
 
-  void chatId(chatEmail) {
-    User? user = FirebaseConfig.auth.currentUser;
-    RxString currentUserEmail = ''.obs;
-    FirebaseConfig.storage
-        .collection('user')
-        .where('uid', isEqualTo: user!.uid)
-        .get()
-        .then((value) {
-      for (var curusr in value.docs) {
-        print('hello this are the room ids of user');
-        currentUserEmail.value = curusr['email'];
-      }
-    });
-    FirebaseConfig.storage
-        .collection('chat')
-        .where('users', arrayContainsAny: [chatEmail,currentUserEmail.value])
-        .get().then((value) {
-          if(value.docs.length>0){
-            print('user chat exists');
-          }else{
-            FirebaseFirestore.instance.collection("chat").add({
-              'users': FieldValue.arrayUnion([currentUserEmail.value, chatEmail]),
-            }).then((value) => print(value.id));
-            print('new user chat has been created');
-          }
-    });
+  void chatId(chatEmail) async {
+    try {
+      User? user = FirebaseConfig.auth.currentUser;
+      await FirebaseConfig.storage
+          .collection('user')
+          .where('email', isEqualTo: chatEmail)
+          .get()
+          .then((value) async {
+        for (var curusr in value.docs) {
+          print(curusr['uid']);
+          peerUser = curusr['uid'];
+        }
+        QuerySnapshot snapshots = await FirebaseConfig.storage
+            .collection('chat')
+            .where('users', arrayContains: [user!.uid, peerUser]).get();
+        for (var snapshot in snapshots.docs) {
+          if ((snapshot['users'][0] == user.uid &&
+                  snapshot['users'][1] == peerUser) ||
+              (snapshot['users'][0] == peerUser &&
+                  snapshot['users'][1] == user.uid)) {
+            chatID = snapshot['chatId'];
+            break;
+          } else {
+               chatID = Uuid().v4();
+                  await FirebaseFirestore.instance.collection("chat").doc(chatID).set({
+                'chatId': chatId,
+                'users': FieldValue.arrayUnion([user.uid, peerUser]),
+              });
 
+          }
+        }
+      });
+    } catch (exception) {
+      print(exception);
+    }
+    update();
   }
 }

@@ -27,7 +27,7 @@ class _SignUpState extends State<SignUp> {
         return Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: Appbar('Sign Up', AppColors.primaryText, true,
-              AppColors.primaryIcon, true),
+              AppColors.primaryIcon, false),
           body: SingleChildScrollView(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
               child: Container(

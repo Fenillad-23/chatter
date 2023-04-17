@@ -24,15 +24,20 @@ class signin extends GetxController {
 
   void verify_user() {
     if (email.text.isEmail || password.text.length > 4) {
-      FirebaseConfig.auth
-          .signInWithEmailAndPassword(
-              email: email.text, password: password.text)
-          .then((value) {
-        Get.offNamed(RouteGenerator.home);
-      }).catchError((e) {
-        msg = e.message;
-        toast(msg);
-      });
+     try{
+       FirebaseConfig.auth
+           .signInWithEmailAndPassword(
+           email: email.text, password: password.text)
+           .then((value) {
+         Get.offNamed(RouteGenerator.home);
+       }).catchError((e) {
+         msg = e.message;
+         toast(msg);
+       });
+     }catch(Exception){
+       msg = Exception.toString();
+       toast(msg);
+     }
     }
   }
 }

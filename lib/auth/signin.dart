@@ -3,7 +3,6 @@ import 'package:chatter/auth/signup.dart';
 import 'package:chatter/widget/EditText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../chat/chathome.dart';
 import '../color/AppColor.dart';
 import '../controller/signincontroller.dart';
 import '../widget/TextView.dart';
@@ -27,7 +26,7 @@ class _SignInState extends State<SignIn> {
         return Scaffold(
             resizeToAvoidBottomInset: true,
             appBar: Appbar('Sign In', AppColors.primaryText, true,
-                AppColors.primaryIcon, true),
+                AppColors.primaryIcon, false),
             body: SingleChildScrollView(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
