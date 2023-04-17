@@ -149,7 +149,7 @@ class _IndividualChatState extends State<IndividualChat> {
                     child: EditText(
                       hint: 'Type Messages',
                       borderRadius: 12,
-                      showRectangularInputBorder: true,
+                      showBorder: false,
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                       minLines: 2,

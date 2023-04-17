@@ -114,9 +114,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                 child: primaryButton(380, 60, Colors.transparent, () {
                   Get.to(
                     ResetPassword(),
-                    curve: Curves.easeIn,
-                    duration: Duration(seconds: 2),
-                    transition: Transition.fadeIn,
                   );
                 }, 'Submit', AppColors.secondaryText, 28)),
             Padding(

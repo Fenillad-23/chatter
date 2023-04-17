@@ -1,9 +1,11 @@
 import 'dart:async';
 
-import 'package:chatter/intro/splash2.dart';
-import 'package:flutter/material.dart';
 
+import 'package:chatter/route/route_generator.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+
 
 class SplashScreen1 extends StatefulWidget {
   const SplashScreen1({super.key});
@@ -20,10 +22,7 @@ class _SplashScreen1State extends State<SplashScreen1> {
   }
 
   void go() {
-    Get.to(SplashScreen2(),
-        transition: Transition.fade,
-        curve: Curves.ease,
-        duration: Duration(seconds: 3));
+    Get.offNamed(RouteGenerator.login);
   }
 
   @override

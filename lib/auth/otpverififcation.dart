@@ -66,11 +66,7 @@ class _OTPverificationState extends State<OTPverification> {
                 padding: const EdgeInsets.only(top: 172.0, left: 24, right: 24),
                 child: primaryButton(380, 60, Colors.transparent, () {
                   Get.to(
-                    ResetPassword(),
-                    curve: Curves.easeIn,
-                    duration: Duration(seconds: 2),
-                    transition: Transition.fadeIn,
-                  );
+                    ResetPassword());
                 }, 'Submit', AppColors.secondaryText, 28)),
             Padding(
                 padding: const EdgeInsets.only(top: 24.0),

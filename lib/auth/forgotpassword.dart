@@ -68,9 +68,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         child: primaryButton(380, 60, Colors.transparent, () {
                           Get.to(
                             OTPverification(),
-                            curve: Curves.easeIn,
-                            duration: Duration(seconds: 2),
-                            transition: Transition.fadeIn,
                           );
                         }, 'Submit', AppColors.secondaryText, 28)),
                     Padding(
