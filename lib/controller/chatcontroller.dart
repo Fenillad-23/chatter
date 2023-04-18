@@ -61,41 +61,33 @@ class chat extends GetxController {
     update();
   }
 
-  void chatId(chatEmail) async {
-    try {
-      User? user = FirebaseConfig.auth.currentUser;
-      await FirebaseConfig.storage
-          .collection('user')
-          .where('email', isEqualTo: chatEmail)
-          .get()
-          .then((value) async {
-        for (var curusr in value.docs) {
-          print(curusr['uid']);
-          peerUser = curusr['uid'];
-        }
-        QuerySnapshot snapshots = await FirebaseConfig.storage
-            .collection('chat')
-            .where('users', arrayContains: [user!.uid, peerUser]).get();
-        for (var snapshot in snapshots.docs) {
-          if ((snapshot['users'][0] == user.uid &&
-                  snapshot['users'][1] == peerUser) ||
-              (snapshot['users'][0] == peerUser &&
-                  snapshot['users'][1] == user.uid)) {
-            chatID = snapshot['chatId'];
-            break;
+  void chatId(chatEmail) {
+    User? user = FirebaseConfig.auth.currentUser;
+    RxString currentUserEmail = ''.obs;
+    FirebaseConfig.storage
+        .collection('user')
+        .where('uid', isEqualTo: user!.uid)
+        .get()
+        .then((value) {
+      for (var curusr in value.docs) {
+        print('hello this are the room ids of user');
+        currentUserEmail.value = curusr['email'];
+      }
+    });
+    FirebaseConfig.storage
+        .collection('chat')
+        .where('users', arrayContainsAny: [chatEmail, currentUserEmail.value])
+        .get()
+        .then((value) {
+          if (value.docs.length > 0) {
+            print('user chat exists');
           } else {
-               chatID = Uuid().v4();
-                  await FirebaseFirestore.instance.collection("chat").doc(chatID).set({
-                'chatId': chatId,
-                'users': FieldValue.arrayUnion([user.uid, peerUser]),
-              });
-
+            FirebaseFirestore.instance.collection("chat").add({
+              'users':
+                  FieldValue.arrayUnion([currentUserEmail.value, chatEmail]),
+            }).then((value) => print(value.id));
+            print('new user chat has been created');
           }
-        }
-      });
-    } catch (exception) {
-      print(exception);
-    }
-    update();
+        });
   }
 }
