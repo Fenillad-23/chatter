@@ -3,12 +3,12 @@ import 'package:chatter/route/route_generator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:get_storage/get_storage.dart';
 import '../toast_msg.dart';
 
 class signup extends GetxController {
   bool obscure = true;
-
+  final box = GetStorage();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController name = TextEditingController();
@@ -40,6 +40,7 @@ class signup extends GetxController {
               .doc(user.uid)
               .set(userdata)
               .then((value) {
+                box.write('email', email.text);
             Get.offNamed(RouteGenerator.home);
           }).catchError((e) {
             msg = e.message;

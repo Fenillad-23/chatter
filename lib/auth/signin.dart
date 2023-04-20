@@ -10,14 +10,9 @@ import '../widget/appBar.dart';
 import '../widget/primaryButton.dart';
 import '../widget/roundContainer.dart';
 
-class SignIn extends StatefulWidget {
+class SignIn extends StatelessWidget {
   const SignIn({super.key});
 
-  @override
-  State<SignIn> createState() => _SignInState();
-}
-
-class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<signin>(
@@ -77,17 +72,13 @@ class _SignInState extends State<SignIn> {
                                 ? IconButton(
                                     icon: Icon(Icons.visibility_rounded),
                                     onPressed: () {
-                                      setState(() {
                                         _.Obscure(_.obscure);
-                                      });
                                     },
                                   )
                                 : IconButton(
                                     icon: Icon(Icons.visibility_off_rounded),
                                     onPressed: () {
-                                      setState(() {
                                         _.Obscure(_.obscure);
-                                      });
                                     },
                                   ),
                             border: InputBorder.none,
@@ -110,7 +101,6 @@ class _SignInState extends State<SignIn> {
                               value: _.remember,
                               onChanged: ((value) {
                                 _.Remember(value!);
-                                setState(() {});
                               }),
                               shape: CircleBorder()),
                           Padding(

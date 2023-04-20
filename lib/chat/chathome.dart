@@ -66,10 +66,13 @@ class _ChatHomeState extends State<ChatHome> {
                               padding: const EdgeInsets.all(8.0),
                               child: ListTile(
                                 onTap: () {
-                                  Get.to(IndividualChat(),
-                                      arguments: _.chatContact[index]
-                                          ['username']);
                                   _.chatId(_.chatContact[index]['email']);
+                                  Get.to(IndividualChat(),
+                                      arguments:[ _.chatContact[index]
+                                          ['email'],
+                                    _.box.read('email'),_.chatID]
+                                  );
+
                                 },
                                 leading: ClipRRect(
                                     borderRadius: BorderRadius.circular(100),
@@ -115,7 +118,9 @@ class _ChatHomeState extends State<ChatHome> {
               Icons.person_add,
             ),
             elevation: 1,
-            onPressed: () {},
+            onPressed: () {
+              _.redirect_to_addchat();
+            },
           ),
         );
       },
