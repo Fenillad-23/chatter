@@ -4,11 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import '../model/user.dart';
 import '../toast_msg.dart';
 
 class signup extends GetxController {
   bool obscure = true;
   final box = GetStorage();
+  Rx<Userdata>? data;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController name = TextEditingController();
@@ -29,18 +31,17 @@ class signup extends GetxController {
                 email: email.text, password: password.text)
             .then((value) {
           User? user = FirebaseConfig.auth.currentUser;
-          Map<String, dynamic> userdata = {
-            'email': email.text,
-            'img': img,
-            'uid': user!.uid,
-            'username': name.text
-          };
+          data = Userdata(email.text, img, user!.uid, name.text).obs;
+          Map<String, dynamic>? userdata = data?.toJson();
           FirebaseConfig.storage
               .collection('user')
               .doc(user.uid)
-              .set(userdata)
+              .set(userdata!)
               .then((value) {
-                box.write('email', email.text);
+            box.write('email', email.text);
+            box.write('uid', user!.uid);
+            box.write('username', name.text);
+            box.write('img', img);
             Get.offNamed(RouteGenerator.home);
           }).catchError((e) {
             msg = e.message;

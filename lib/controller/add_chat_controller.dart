@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -17,13 +17,11 @@ class AddChatController extends GetxController {
     fetchAllUser();
     super.onInit();
   }
-
   void fetchAllUser() async {
     try {
-      User? user = FirebaseConfig.auth.currentUser;
       FirebaseConfig.storage
           .collection('user')
-          .where('uid', isNotEqualTo: user!.uid)
+          .where('email', isNotEqualTo: box.read('email'))
           .get()
           .then((list) {
         for (var result in list.docs) {
@@ -36,9 +34,7 @@ class AddChatController extends GetxController {
       msg = FirebaseAuthException.toString();
       toast(msg);
     }
-
   }
-
    chatId(String peer) async {
     String currentUserEmail = box.read('email');
     if (currentUserEmail.hashCode <= peer.hashCode) {
@@ -48,11 +44,9 @@ class AddChatController extends GetxController {
     }
     Map<String, dynamic> addToChat = {
       'chatID': chatID,
-      'users': FieldValue.arrayUnion([currentUserEmail, peer])
+      'users': FieldValue.arrayUnion([currentUserEmail, peer]),
+      'createAt':DateTime.now().millisecondsSinceEpoch.toString()
     };
-    await FirebaseConfig.storage
-        .collection('chat')
-        .doc(chatID)
-        .set(addToChat);
+    await FirebaseConfig.storage.collection('chat').doc(chatID).set(addToChat);
   }
 }

@@ -38,6 +38,8 @@ class EditText extends StatelessWidget {
   final TextAlign? textAlign;
   final TextInputAction? inputAction;
   final Function(String value)? onFieldSubmitted;
+  BoxConstraints? prefixIconConstraints;
+  BoxConstraints? suffixIconConstraints;
 
   EditText({
     this.focusNode,
@@ -75,6 +77,8 @@ class EditText extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.inputAction,
     this.onFieldSubmitted,
+    this.prefixIconConstraints,
+    this.suffixIconConstraints,
   }) {
     if (showRectangularInputBorder! && (showBorder == null)) {
       showBorder = true;
@@ -138,6 +142,8 @@ class EditText extends StatelessWidget {
               )
             : null,
         contentPadding: contentPadding,
+        prefixIconConstraints: prefixIconConstraints,
+        suffixIconConstraints: suffixIconConstraints,
       ),
       minLines: minLines,
       maxLines: maxLines,

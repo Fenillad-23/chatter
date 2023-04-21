@@ -53,7 +53,6 @@ class AddChatScreen extends StatelessWidget {
                           Get.to(IndividualChat(), arguments: [
                             _.chatContact[index]['email'],
                             _.chatContact[index]['username'],
-
                             _.chatID,
                             _.chatContact[index]['img'],
                           ]);

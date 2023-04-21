@@ -38,7 +38,6 @@ class _ChatHomeState extends State<ChatHome> {
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) {
-
                           return Dismissible(
                             background: ColoredBox(
                               color: Colors.white,
@@ -65,14 +64,13 @@ class _ChatHomeState extends State<ChatHome> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: ListTile(
-                                onTap: () {
-                                  _.chatId(_.chatContact[index]['email']);
-                                  Get.to(IndividualChat(),
-                                      arguments:[ _.chatContact[index]
-                                          ['email'],
-                                    _.box.read('email'),_.chatID]
-                                  );
-
+                                onTap: () async{
+                                 await _.chatId(_.chatContact[index]['email']);
+                                  Get.to(IndividualChat(), arguments: [
+                                    _.chatContact[index]['email'].toString(),
+                                    _.box.read('email'),
+                                    _.chatID
+                                  ]);
                                 },
                                 leading: ClipRRect(
                                     borderRadius: BorderRadius.circular(100),
@@ -126,6 +124,4 @@ class _ChatHomeState extends State<ChatHome> {
       },
     );
   }
-
-
 }
