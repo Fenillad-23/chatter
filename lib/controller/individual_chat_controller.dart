@@ -1,4 +1,5 @@
 import 'package:chatter/fireabse_config.dart';
+import 'package:chatter/model/chatMsg.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,6 +9,7 @@ class IndividualChatController extends GetxController {
   String? peerusername, peerusermail, currentusermail,chatID;
   TextEditingController message = TextEditingController();
   var data = Get.arguments;
+
   final box = GetStorage();
   ScrollController scroll = ScrollController();
   void getdetails() {
@@ -33,12 +35,14 @@ class IndividualChatController extends GetxController {
   // }
 
   void sendMessages() async {
-    Map<String, dynamic> msg = {
-      'messageContent': message.text,
-      'sender': box.read('email'),
-      'receiver': data[0],
-      "datatime": DateTime.now().millisecondsSinceEpoch.toString()
-    };
+    ChatMsg text = ChatMsg(message.text,box.read('email') , data[0],DateTime.now().millisecondsSinceEpoch.toString());
+    Map<String,dynamic> msg = text.toJson();
+    // Map<String, dynamic> msg = {
+    //   'messageContent': message.text,
+    //   'sender': box.read('email'),
+    //   'receiver': data[0],
+    //   "datatime": DateTime.now().millisecondsSinceEpoch.toString()
+    // };
     FirebaseConfig.storage
         .collection('chat')
         .doc(data[2])

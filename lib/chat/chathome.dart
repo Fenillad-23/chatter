@@ -23,11 +23,7 @@ class _ChatHomeState extends State<ChatHome> {
       builder: (_) {
         return Scaffold(
           appBar: Appbar('Chat', AppColors.secondaryText, false,
-              AppColors.secondaryIcon, false, [
-            Padding(
-                padding: const EdgeInsets.only(right: 25.0),
-                child: Icon(Icons.search))
-          ]),
+              AppColors.secondaryIcon, false, []),
           body: SingleChildScrollView(
             child: Obx(
               () => Column(children: [
@@ -66,10 +62,12 @@ class _ChatHomeState extends State<ChatHome> {
                               child: ListTile(
                                 onTap: () async{
                                  await _.chatId(_.chatContact[index]['email']);
+                                 print(_.chatID);
                                   Get.to(IndividualChat(), arguments: [
                                     _.chatContact[index]['email'].toString(),
-                                    _.box.read('email'),
-                                    _.chatID
+                                    _.chatContact[index]['username'],
+                                    _.chatID,
+                                    _.chatContact[index]['img']
                                   ]);
                                 },
                                 leading: ClipRRect(

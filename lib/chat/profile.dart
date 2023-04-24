@@ -45,14 +45,14 @@ class Profile extends StatelessWidget {
                    ClipRRect(
                        borderRadius: BorderRadius.circular(100),
                        child: Image.asset(
-                         'assets/person1.png',
+                         _.box.read('img'),
                          height: 72,
                          width: 72,
                        )),
                    Padding(
                        padding: const EdgeInsets.only(left: 18.0),
                        child: TextView(
-                         'Adi Rajwani',
+                         _.box.read('username'),
                          fontWeight: FontWeight.w600,
                          fontSize: 24,
                        ))
@@ -132,7 +132,7 @@ class Profile extends StatelessWidget {
                    Padding(
                      padding: const EdgeInsets.only(left: 65.0),
                      child: TextView(
-                       'Adirajwani@somemail.com',
+                       _.box.read('email'),
                        fontWeight: FontWeight.w500,
                        fontSize: 20,
                      ),
