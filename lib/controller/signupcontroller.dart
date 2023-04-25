@@ -39,7 +39,7 @@ class signup extends GetxController {
               .set(userdata!)
               .then((value) {
             box.write('email', email.text);
-            box.write('uid', user!.uid);
+            box.write('uid', user.uid);
             box.write('username', name.text);
             box.write('img', img);
             Get.offNamed(RouteGenerator.home);

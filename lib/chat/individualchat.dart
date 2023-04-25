@@ -108,11 +108,11 @@ class IndividualChat extends StatelessWidget {
                                                       bottomRight: Radius.circular(12),
                                                       topRight: _.messages[index]['sender'] == _.currentusermail ? Radius.circular(0) : Radius.circular(12))),
                                               child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 12.0,
-                                                    top: 10,
-                                                    right: 32,
-                                                    bottom: 12),
+                                                padding:  EdgeInsets.only(
+                                                    left:_.messages[index]['type']=="1"? 2: 12.0,
+                                                    top:_.messages[index]['type']=="1"?0: 10,
+                                                    right:_.messages[index]['type']=="1"?2: 32,
+                                                    bottom: _.messages[index]['type']=="1"?0:12),
                                                 child:_.messages[index]['type']=="0" ? TextView(
                                                   _.messages[index]
                                                       ['messageContent'],
@@ -126,8 +126,7 @@ class IndividualChat extends StatelessWidget {
                                                   imageUrl: _.messages[index]
                                                   ['messageContent'],
                                                   height: 350,
-                                                  width: 300,
-
+                                                  width: 150,
                                                 ),
                                               ),
                                             ),
@@ -180,7 +179,7 @@ class IndividualChat extends StatelessWidget {
                                   duration: Duration(seconds: 1),
                                   curve: Curves.ease);
                               if(_.message.text != ''){
-                                _.sendMessages('0');
+                                _.sendMessages('0',_.message.text);
                               }else{
                                 String msg ='empty msg';
                                 toast(msg);

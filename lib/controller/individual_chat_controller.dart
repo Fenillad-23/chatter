@@ -32,8 +32,8 @@ class IndividualChatController extends GetxController {
   }
 
   var messages = [].obs;
-  void sendMessages(String type) async {
-    ChatMsg text = ChatMsg(message.text, box.read('email'), data[0],
+  void sendMessages(String type, String msgContent) async {
+    ChatMsg text = ChatMsg(msgContent, box.read('email'), data[0],
         DateTime.now().millisecondsSinceEpoch.toString(), type);
     Map<String, dynamic> msg = text.toJson();
     FirebaseConfig.storage
@@ -53,14 +53,14 @@ class IndividualChatController extends GetxController {
     if (image != null) {
       await FirebaseConfig.media
           .ref()
-          .child(currentusermail!+'\'s images')
+          .child('chat/${image!.name}')
           .putFile(File(image!.path))
           .then((p0) => print('image uploaded'));
       Reference rf = await FirebaseConfig.media
           .ref()
-          .child(currentusermail!+'\'s images');
-      message.text = await rf.getDownloadURL();
-      sendMessages('1');
+          .child('chat/${image!.name}');
+      String path = await rf.getDownloadURL();
+      sendMessages('1',path);
     }
   }
 
