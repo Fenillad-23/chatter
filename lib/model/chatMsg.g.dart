@@ -11,6 +11,7 @@ ChatMsg _$ChatMsgFromJson(Map<String, dynamic> json) => ChatMsg(
       json['sender'] as String?,
       json['receiver'] as String?,
       json['datatime'] as String?,
+      json['type'] as String?,
     );
 
 Map<String, dynamic> _$ChatMsgToJson(ChatMsg instance) => <String, dynamic>{
@@ -18,4 +19,5 @@ Map<String, dynamic> _$ChatMsgToJson(ChatMsg instance) => <String, dynamic>{
       'sender': instance.sender,
       'receiver': instance.receiver,
       'datatime': instance.datatime,
+      'type': instance.type,
     };

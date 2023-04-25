@@ -6,6 +6,7 @@ class ChatMsg {
   String? sender;
   String? receiver;
   String? datatime;
-  ChatMsg(this.messageContent,this.sender,this.receiver,this.datatime);
+  String? type;
+  ChatMsg(this.messageContent,this.sender,this.receiver,this.datatime,this.type);
   Map<String, dynamic> toJson() => _$ChatMsgToJson(this);
 }
