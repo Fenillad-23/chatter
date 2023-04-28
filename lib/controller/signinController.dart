@@ -52,14 +52,13 @@ class signin extends GetxController {
               .collection('user')
               .where('email', isEqualTo: email.text)
               .get()
-              .then((snapshot) async{
+              .then((snapshot) async {
             for (var snap in snapshot.docs) {
-              data =await Userdata.fromJson(snap.data()).obs;
+              data = await Userdata.fromJson(snap.data()).obs;
               box.write('email', email.text);
               box.write('username', data!.value.username);
               box.write('img', data!.value.img);
               box.write('uid', data!.value.uid);
-              var name = box.read('email');
             }
           });
           Get.offNamed(RouteGenerator.home);

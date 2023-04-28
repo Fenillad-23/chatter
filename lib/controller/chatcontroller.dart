@@ -3,7 +3,6 @@ import 'package:chatter/route/route_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import '../model/chatUser.dart';
 import '../toast_msg.dart';
 
 class chat extends GetxController {
@@ -44,11 +43,13 @@ class chat extends GetxController {
       toast(msg);
     }
   }
+
   @override
   void onInit() {
     super.onInit();
     getAvailableChatContact();
   }
+
   @override
   void onClose() {
     chatID = '';
@@ -56,6 +57,7 @@ class chat extends GetxController {
     Get.delete<chat>();
     super.onClose();
   }
+
   Future<void> chatId(String peer) async {
     String currentUserEmail = box.read('email');
     if (currentUserEmail.hashCode <= peer.hashCode) {
@@ -64,6 +66,7 @@ class chat extends GetxController {
       chatID = '$peer-$currentUserEmail';
     }
   }
+
   void redirect_to_addchat() {
     Get.toNamed(RouteGenerator.addchat);
   }

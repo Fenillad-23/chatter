@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chatter/fireabse_config.dart';
 import 'package:chatter/model/chatMsg.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -9,18 +10,17 @@ import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 class IndividualChatController extends GetxController {
-  IndividualChatController();
   XFile? image;
   RxBool isSelectedImage = false.obs;
-  final ImagePicker picker = ImagePicker();
-  String? peerusername, peerusermail, currentusermail, chatID;
-  TextEditingController message = TextEditingController();
   var data = Get.arguments;
+  String? peerusername, peerusermail, currentusermail, chatID;
 
+  TextEditingController message = TextEditingController();
+  final ImagePicker picker = ImagePicker();
+  ChatMsg? msg;
   final box = GetStorage();
   ScrollController scroll = ScrollController();
   void getdetails() {
-    // name = data;
     peerusername = data[1];
     peerusermail = data[0];
     chatID = data[2];
@@ -31,7 +31,8 @@ class IndividualChatController extends GetxController {
     print(data[3]);
   }
 
-  var messages = [].obs;
+  RxList<ChatMsg> messages = <ChatMsg>[].obs;
+
   void sendMessages(String type, String msgContent) async {
     ChatMsg text = ChatMsg(msgContent, box.read('email'), data[0],
         DateTime.now().millisecondsSinceEpoch.toString(), type);
@@ -56,11 +57,10 @@ class IndividualChatController extends GetxController {
           .child('chat/${image!.name}')
           .putFile(File(image!.path))
           .then((p0) => print('image uploaded'));
-      Reference rf = await FirebaseConfig.media
-          .ref()
-          .child('chat/${image!.name}');
+      Reference rf =
+          await FirebaseConfig.media.ref().child('chat/${image!.name}');
       String path = await rf.getDownloadURL();
-      sendMessages('1',path);
+      sendMessages('1', path);
     }
   }
 
@@ -69,5 +69,9 @@ class IndividualChatController extends GetxController {
     super.onInit();
     getdetails();
     // getMessages();
+  }
+
+  void getMsg(snapshot) {
+    snapshot.data.forEach((key, value) {});
   }
 }
